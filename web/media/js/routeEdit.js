@@ -16,7 +16,7 @@ var UNSAVEDCOLOR = "#333333";
 var COLOR = ["#537082", "#FF9900", "#548C00", "##009933", "#CC0066", "#009999", "#666699", "#FF6600", "#8F4586"];
 var startId = 0;
 var newRouteIndex = 0;
-var IP = "http://115.159.218.128:3000/users"
+var IP = "http://115.159.218.128:3000"
 var gridster = null;
 var reloadMap = document.getElementById("reloadMap");
 reloadMap.onclick = function() {
@@ -59,7 +59,7 @@ resetStations.onclick = function() {
     map.clearOverlays();
     stationArr = [];
     $.ajax({
-        url: IP + "addPoints",
+        url: IP + "/addPoints",
         type: 'post',
         dataType: "json",
         async: false,
@@ -171,7 +171,7 @@ function MarkerRightClickHandler(marker, iw) {
 function getData() {
     $.ajax({
         type: 'GET',
-        url: IP + '/getRoute',
+        url: IP + '/users/getRoute',
         //data: {username:$("#username").val(), content:$("#content").val()},
         dataType: 'json',
         async: false,
@@ -426,7 +426,7 @@ function refreshMap(ifRefreshMarker) {
             var point = { id: station.id, pos: new BMap.Point(station.posx, station.posy), name: station.name, address: station.address, num: station.num };
             route[i].push(point.pos);
             if (ifRefreshMarker) {
-                var marker = [{ title: station.name, content: station.address, point: pos, isOpen: 0, icon: { w: 32, h: 40, l: 0, t: 0, x: 6, lb: 5 }, id: station.id, type: 1 }];
+                var marker = [{ title: station.name, content: station.address, point: pos, isOpen: 0, icon: { w: 15, h: 20, l: 0, t: 0, x: 6, lb: 5 }, id: station.id, type: 1 }];
                 stationArr.push(point);
                 addMarker(marker);
             }
@@ -441,7 +441,7 @@ function routePlanning(arg_0) {
     console.log("generate path");
     console.log(parseSimplePointArr(stationArr));
     $.ajax({
-        url: IP + "generatePath",
+        url: IP + "/generatePath",
         type: 'post',
         dataType: "json",
         data: {
